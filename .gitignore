@@ -1,2 +1,5 @@
 .DS_Store
 **/.DS_Store
+
+# Vídeos UGC originais (pesados) — versão comprimida vai em assets/video/
+videos ugc/

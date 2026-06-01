@@ -82,8 +82,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 20px;
+      padding: 12px 18px;
       border-bottom: 1px solid var(--pink-main);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .nav-logo {
       font-family: var(--font-title);
@@ -94,6 +100,19 @@
     }
     .nav-logo span { font-size: 10px; display: block; letter-spacing: 0.3em; font-weight: 400; margin-top: 2px; }
     .nav-icon { width: 24px; height: 24px; opacity: 0.85; }
+    .nav-cta {
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--font-title);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      border-radius: var(--radius-lg);
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.88; }
 
     /* ─── QUEM USA (UGC STRIP) ───────────────────────── */
     .ugc-section {
@@ -117,22 +136,28 @@
       padding-bottom: 8px;
     }
     .ugc-scroll::-webkit-scrollbar { display: none; }
-    .ugc-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 2.5px solid var(--pink-accent);
+    .ugc-card {
+      position: relative;
+      flex: 0 0 auto;
+      width: 150px;
+      aspect-ratio: 9 / 16;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--dark);
     }
-    .ugc-avatar-placeholder {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--pink-main);
-      flex-shrink: 0;
-      border: 2.5px solid var(--pink-accent);
+    .ugc-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── ANTES / DEPOIS (vídeo único) ───────────────── */
+    .antes-depois-section { padding: 8px 20px 4px; }
+    .antes-depois-video {
+      max-width: 320px;
+      margin: 18px auto 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--dark);
+      aspect-ratio: 9 / 16;
     }
+    .antes-depois-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* ─── PRODUCT CAROUSEL ───────────────────────────── */
     .carousel-wrap {
@@ -1002,20 +1027,10 @@
 
   <!-- ░░ NAV ░░ -->
   <nav class="nav" aria-label="Navegação principal">
-    <button aria-label="Menu" style="background:none; padding:0;">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
     <div class="nav-logo" aria-label="Hidrabene Derma">
       <img src="./assets/brand/logo-hidrabene-derma.png" alt="Hidrabene Derma" />
     </div>
-    <button aria-label="Carrinho" style="background:none; padding:0; position:relative;">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-    </button>
+    <button class="nav-cta" onclick="document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })">Comprar agora</button>
   </nav>
 
   <!-- ░░ HERO — LANÇAMENTO (lifestyle) ░░ -->
@@ -1069,12 +1084,13 @@
   <section class="ugc-section" aria-label="Quem usa">
     <p class="ugc-label">Quem usa e aprova</p>
     <div class="ugc-scroll" role="list">
-      <!-- Substitua pelos arquivos reais de UGC (vídeos/reels das clientes) -->
-      <div class="ugc-avatar-placeholder" role="listitem" aria-label="Cliente usando o produto"></div>
-      <div class="ugc-avatar-placeholder" role="listitem"></div>
-      <div class="ugc-avatar-placeholder" role="listitem"></div>
-      <div class="ugc-avatar-placeholder" role="listitem"></div>
-      <div class="ugc-avatar-placeholder" role="listitem"></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-1.jpg"><source src="./assets/video/ugc/u1.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-2.jpg"><source src="./assets/video/ugc/u2.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-3.jpg"><source src="./assets/video/ugc/u3.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-4.jpg"><source src="./assets/video/ugc/u4.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-5.jpg"><source src="./assets/video/ugc/u5.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-6.jpg"><source src="./assets/video/ugc/u6.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" muted loop playsinline preload="metadata" poster="./assets/images/poster-ugc-7.jpg"><source src="./assets/video/ugc/u7.mp4" type="video/mp4" /></video></div>
     </div>
   </section>
 
@@ -1111,6 +1127,16 @@
 
   <!-- Infográfico de benefícios -->
   <img class="beneficios-img" src="./assets/images/beneficios.png" alt="Benefícios da Base Stick: alta cobertura, FPS 50 UVA + UVB, toque seco, controle de oleosidade e acne, pele protegida" loading="lazy" />
+
+  <!-- ░░ ANTES / DEPOIS (vídeo) ░░ -->
+  <section class="antes-depois-section" aria-label="Antes e depois">
+    <h2 class="section-title" style="text-align:center;">Veja o <em>antes e depois</em></h2>
+    <div class="antes-depois-video">
+      <video class="vid-inview" muted loop playsinline preload="metadata" poster="./assets/images/poster-antes-depois.jpg">
+        <source src="./assets/video/antes-depois.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </section>
 
   <!-- ░░ HOOKS (5 razões) ░░ -->
   <section class="hooks-section section-pad" aria-label="5 razões para escolher">
@@ -1588,6 +1614,19 @@
         });
       });
       render();
+    })();
+
+    // Autoplay de vídeos (UGC + antes/depois) só quando visíveis na tela
+    (function () {
+      const vids = document.querySelectorAll('.ugc-video, .vid-inview');
+      if (!('IntersectionObserver' in window) || !vids.length) return;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.play().catch(() => {}); }
+          else { e.target.pause(); }
+        });
+      }, { threshold: 0.5 });
+      vids.forEach(v => io.observe(v));
     })();
 
     // FAQ accordion

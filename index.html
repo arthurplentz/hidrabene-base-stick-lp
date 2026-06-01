@@ -256,6 +256,9 @@
     /* ─── PRICE ──────────────────────────────────────── */
     .badge-chip svg { width: 13px; height: 13px; flex-shrink: 0; }
     .price-old { display: inline-block; font-family: var(--font-title); font-size: 14px; font-weight: 600; color: var(--gray); text-decoration: line-through; margin-bottom: 4px; }
+    .buy-attrs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 16px; }
+    .buy-attr { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 7px; }
+    .buy-attr > span:last-child { font-family: var(--font-title); font-size: 11px; font-weight: 600; line-height: 1.25; color: var(--dark); }
     .price-block { margin-bottom: 20px; }
     .price-main {
       font-family: var(--font-title);
@@ -1249,7 +1252,7 @@
       </div>
     </div>
 
-    <button class="cta-primary" style="margin-top:8px;" onclick="comprarAgora()">
+    <button class="cta-primary" style="margin-top:8px;" onclick="document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })">
       Comprar Agora →
     </button>
   </section>
@@ -1346,16 +1349,10 @@
         <p class="product-desc">
           Protetor solar e base no mesmo stick. FPS 50 contra UVA, UVB e luz visível, com cobertura alta que segura o dia inteiro. Um produto no lugar de vários.
         </p>
-        <div class="product-badges" role="list">
-          <span class="badge-chip" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>Alta Cobertura</span>
-          <span class="badge-chip" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" stroke="none"/></svg>Acabamento Matte</span>
-          <span class="badge-chip" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Antiacne</span>
-        </div>
-
         <div class="price-block">
           <span class="price-old">De R$ 96,46</span>
-          <div class="price-main">por R$ 74,90</div>
-          <div class="price-installment">ou 6x de R$ 12,48 sem juros</div>
+          <div class="price-main">3x de R$ 24,97</div>
+          <div class="price-installment">ou R$ 74,90 à vista · sem juros</div>
         </div>
 
         <div class="variant-head">
@@ -1389,7 +1386,11 @@
           Como escolher meu tom?
         </button>
 
-        <span class="cta-selo">10% OFF · primeira compra</span>
+        <div class="buy-attrs" role="list">
+          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><span>Alta Cobertura</span></div>
+          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" stroke="none"/></svg></span><span>Acabamento Matte</span></div>
+          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span><span>Antiacne</span></div>
+        </div>
         <button class="cta-primary" onclick="comprarAgora()">Comprar agora →</button>
 
         <!-- Selos da marca -->
@@ -1480,7 +1481,7 @@
       FPS 50 · Alta cobertura · Antiacne · Oil Free<br>
       Em 5 tons — do Clara 1.0 ao Escura 5.0
     </p>
-    <button class="cta-primary cta-pink" style="max-width:360px; margin:0 auto 12px;" onclick="comprarAgora()">
+    <button class="cta-primary cta-pink" style="max-width:360px; margin:0 auto 12px;" onclick="document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })">
       Comprar Agora →
     </button>
     <p style="font-size:12px; color:rgba(255,255,255,0.5); font-family:var(--font-title);">
@@ -1577,7 +1578,8 @@
       alert('Guia de tons: a gente te ajuda a achar seu tom ideal.\n\n(Integrar quiz de shade-match na versão final)');
     }
 
-    // Comprar agora — exige tom selecionado (substituir pela integração com Shopify/plataforma)
+    // Checkout — colar o link do checkout em CHECKOUT_URL quando tiver
+    const CHECKOUT_URL = ''; // ex: 'https://checkout.hidrabene.com.br/base-stick'
     function comprarAgora() {
       const selected = document.querySelector('.variant-option.selected');
       if (!selected) {
@@ -1587,7 +1589,12 @@
         return;
       }
       const variant = selected.dataset.shade || selected.textContent.trim();
-      alert(`Comprar: Base Stick FPS 50\nTom: ${variant}\nPreço: R$ 74,90\n\n(Integrar com o checkout do Shopify ou plataforma do cliente)`);
+      if (CHECKOUT_URL) {
+        const sep = CHECKOUT_URL.includes('?') ? '&' : '?';
+        window.location.href = CHECKOUT_URL + sep + 'tom=' + encodeURIComponent(variant);
+      } else {
+        alert(`Tom selecionado: ${variant}\n\nO link do checkout será configurado aqui (CHECKOUT_URL).`);
+      }
     }
   </script>
 

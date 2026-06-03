@@ -7,12 +7,33 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="googlebot" content="noindex, nofollow" />
 
-  <!-- Fontes -->
+  <!-- Imagem do hero (LCP) -->
+  <link rel="preload" as="image" href="./assets/images/hero-poster.webp" fetchpriority="high" />
+
+  <!-- Fontes (carregamento assíncrono pra não bloquear o render) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Display:ital,wght@1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Display:ital,wght@1,600&display=swap" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Display:ital,wght@1,600&display=swap" /></noscript>
 
   <style>
+    /* ─── FALLBACKS COM MÉTRICA AJUSTADA (anti-CLS na troca de fonte) ─── */
+    @font-face {
+      font-family: 'Poppins-fallback';
+      src: local('Arial');
+      size-adjust: 112.15%; ascent-override: 93.62%; descent-override: 31.21%; line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'Barlow-fallback';
+      src: local('Arial');
+      size-adjust: 96%; ascent-override: 105%; descent-override: 26%; line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'NotoSerif-fallback';
+      src: local('Georgia');
+      size-adjust: 97%; ascent-override: 100%; descent-override: 27%; line-gap-override: 0%;
+    }
+
     /* ─── TOKENS ─────────────────────────────────────── */
     :root {
       --pink-light:   #F9F6F5;
@@ -25,9 +46,9 @@
       --gray:         #A69DA2;
       --gray-light:   #F0EDED;
       --white:        #FFFFFF;
-      --font-title:   'Poppins', sans-serif;
-      --font-body:    'Barlow', sans-serif;
-      --font-display: 'Noto Serif Display', serif;
+      --font-title:   'Poppins', 'Poppins-fallback', sans-serif;
+      --font-body:    'Barlow', 'Barlow-fallback', sans-serif;
+      --font-display: 'Noto Serif Display', 'NotoSerif-fallback', serif;
       --radius-sm:    8px;
       --radius-md:    16px;
       --radius-lg:    40px;
@@ -942,10 +963,15 @@
     .kit-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .kit-name { font-family: var(--font-title); font-size: 20px; font-weight: 800; color: var(--dark); letter-spacing: -0.01em; }
     .kit-sub { font-family: var(--font-title); font-size: 13px; color: var(--gray); margin-bottom: 12px; }
-    .kit-price-old { display: block; font-family: var(--font-title); font-size: 13px; color: var(--gray); text-decoration: line-through; }
-    .kit-price-new { display: block; font-family: var(--font-title); font-size: 26px; font-weight: 800; color: var(--dark); margin: 1px 0; }
-    .kit-price-new em { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--pink-fluor); }
-    .kit-price-parc { display: block; font-family: var(--font-title); font-size: 12px; color: var(--gray); margin-bottom: 14px; }
+    .kit-off { position: absolute; top: 12px; right: 12px; background: var(--pink-fluor); color: var(--white); font-family: var(--font-title); font-size: 12px; font-weight: 800; letter-spacing: 0.01em; padding: 4px 9px; border-radius: var(--radius-sm); line-height: 1; }
+    .kit-unit { margin: 2px 0 8px; }
+    .kit-unit-val { display: block; font-family: var(--font-title); font-size: 30px; font-weight: 800; color: var(--pink-fluor); letter-spacing: -0.015em; line-height: 1.05; }
+    .kit-unit-val small { font-size: 14px; font-weight: 700; color: var(--dark); letter-spacing: 0; }
+    .kit-unit-was { display: block; font-family: var(--font-title); font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .kit-unit-was s { color: var(--gray); }
+    .kit-price-line { display: block; font-family: var(--font-title); font-size: 13.5px; color: var(--dark); margin-bottom: 16px; }
+    .kit-price-line s { color: var(--gray); font-weight: 500; }
+    .kit-price-line strong { font-weight: 800; }
     .kit-cta { width: 100%; margin-top: auto; }
     .kit-guarantee { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-title); font-size: 11.5px; color: var(--gray); margin-top: 6px; }
     .kit-guarantee svg { width: 13px; height: 13px; flex-shrink: 0; stroke: var(--pink-fluor); }
@@ -1084,7 +1110,7 @@
   <!-- ░░ NAV ░░ -->
   <nav class="nav" aria-label="Navegação principal">
     <div class="nav-logo" aria-label="Hidrabene">
-      <img src="./assets/brand/logo-hidrabene-nav.png" alt="Hidrabene" />
+      <img src="./assets/brand/logo-hidrabene-nav.webp" alt="Hidrabene" />
     </div>
     <button class="nav-cta" onclick="document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })">Comprar agora</button>
   </nav>
@@ -1096,15 +1122,15 @@
       <div class="carousel-wrap">
         <div class="carousel-track">
           <div class="carousel-slide">
-            <video class="hero-launch-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/images/hero-poster.jpg" aria-label="Base Stick FPS 50 em uso">
+            <video class="hero-launch-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/hero-poster.webp" aria-label="Base Stick FPS 50 em uso">
               <source src="./assets/video/hero-broll.mp4" type="video/mp4" />
             </video>
           </div>
           <div class="carousel-slide">
-            <img src="./assets/images/hero-produto.jpg" alt="Base Stick FPS 50 Hidrabene com a embalagem" loading="lazy" />
+            <img src="./assets/images/hero-produto.webp" alt="Base Stick FPS 50 Hidrabene com a embalagem" loading="lazy" />
           </div>
           <div class="carousel-slide">
-            <img src="./assets/images/hero-tons-pele.jpg" alt="Swatches dos 5 tons da Base Stick em diferentes tons de pele" loading="lazy" />
+            <img src="./assets/images/hero-tons-pele.webp" alt="Swatches dos 5 tons da Base Stick em diferentes tons de pele" loading="lazy" />
           </div>
         </div>
         <div class="carousel-dots" aria-hidden="true">
@@ -1140,13 +1166,13 @@
   <section class="ugc-section" aria-label="Quem usa">
     <p class="ugc-label">Quem usa e aprova</p>
     <div class="ugc-scroll" role="list">
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-1.jpg"><source src="./assets/video/ugc/u1.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-2.jpg"><source src="./assets/video/ugc/u2.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-3.jpg"><source src="./assets/video/ugc/u3.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-4.jpg"><source src="./assets/video/ugc/u4.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-5.jpg"><source src="./assets/video/ugc/u5.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-6.jpg"><source src="./assets/video/ugc/u6.mp4" type="video/mp4" /></video></div>
-      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-7.jpg"><source src="./assets/video/ugc/u7.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-1.webp"><source src="./assets/video/ugc/u1.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-2.webp"><source src="./assets/video/ugc/u2.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-3.webp"><source src="./assets/video/ugc/u3.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-4.webp"><source src="./assets/video/ugc/u4.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-5.webp"><source src="./assets/video/ugc/u5.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-6.webp"><source src="./assets/video/ugc/u6.mp4" type="video/mp4" /></video></div>
+      <div class="ugc-card" role="listitem"><video class="ugc-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-ugc-7.webp"><source src="./assets/video/ugc/u7.mp4" type="video/mp4" /></video></div>
     </div>
   </section>
 
@@ -1182,7 +1208,7 @@
 
     <!-- Vídeo antes/depois — parte da seção de proteção multifuncional -->
     <div class="antes-depois-video">
-      <video class="vid-inview" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/images/poster-antes-depois.jpg">
+      <video class="vid-inview" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="./assets/images/poster-antes-depois.webp">
         <source src="./assets/video/antes-depois.mp4" type="video/mp4" />
       </video>
       <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Ativar som" onclick="toggleSound(this)">
@@ -1243,7 +1269,7 @@
   </section>
 
   <!-- Infográfico de benefícios -->
-  <img class="beneficios-img" src="./assets/images/beneficios.png" alt="Benefícios da Base Stick: alta cobertura, FPS 50 UVA + UVB, toque seco, controle de oleosidade e acne, pele protegida" loading="lazy" />
+  <img class="beneficios-img" src="./assets/images/beneficios.webp" alt="Benefícios da Base Stick: alta cobertura, FPS 50 UVA + UVB, toque seco, controle de oleosidade e acne, pele protegida" loading="lazy" />
 
   <!-- ░░ ATIVOS ░░ -->
   <section class="ativos-section section-pad" aria-label="Principais ativos">
@@ -1272,7 +1298,7 @@
 
   <!-- Imagem textura: swatches dos 5 tons sobre fundo escuro (continuidade da seção de ativos) -->
   <div style="background: var(--dark); padding: 0 20px 40px; text-align: center;">
-    <img src="./assets/images/textura-tons.png" alt="Swatches da textura da Base Stick nos tons 1.0 a 5.0" loading="lazy" style="max-height: 420px; width: auto; margin: 0 auto;" />
+    <img src="./assets/images/textura-tons.webp" alt="Swatches da textura da Base Stick nos tons 1.0 a 5.0" loading="lazy" style="max-height: 420px; width: auto; margin: 0 auto;" />
     <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 12px;">Textura sedosa, alta cobertura, acabamento aveludado — em 5 tons.</p>
   </div>
 
@@ -1407,12 +1433,15 @@
     <div class="kit-grid" role="list">
       <!-- 1 unidade -->
       <div class="kit-card" role="listitem">
-        <div class="kit-media"><img src="./assets/images/kit-1un.jpg" alt="Base Stick FPS 50 — 1 unidade" width="673" height="853" loading="lazy" /></div>
+        <span class="kit-off">-20%</span>
+        <div class="kit-media"><img src="./assets/images/kit-1un.webp" alt="Base Stick FPS 50 — 1 unidade" width="673" height="853" loading="lazy" /></div>
         <p class="kit-name">1 unidade</p>
         <p class="kit-sub">1 Base Stick FPS 50</p>
-        <span class="kit-price-old">De R$ XX,XX</span>
-        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
-        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <div class="kit-unit">
+          <span class="kit-unit-val">R$ 79,90</span>
+          <span class="kit-unit-was">na unidade avulsa</span>
+        </div>
+        <span class="kit-price-line">De <s>R$ 99,90</s> por <strong>R$ 79,90</strong></span>
         <button class="cta-primary kit-cta" onclick="comprarAgora('1-unidade')">Comprar 1 unidade</button>
         <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
       </div>
@@ -1420,12 +1449,15 @@
       <!-- 2 unidades -->
       <div class="kit-card" role="listitem">
         <span class="kit-banner alt">Mais vendido</span>
-        <div class="kit-media"><img src="./assets/images/kit-2un.jpg" alt="Base Stick FPS 50 — kit com 2 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
+        <span class="kit-off">-35%</span>
+        <div class="kit-media"><img src="./assets/images/kit-2un.webp" alt="Base Stick FPS 50 — kit com 2 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
         <p class="kit-name">2 unidades</p>
         <p class="kit-sub">2 Base Sticks + Lip Tint de brinde</p>
-        <span class="kit-price-old">De R$ XX,XX</span>
-        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
-        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <div class="kit-unit">
+          <span class="kit-unit-val">R$ 64,90<small>/un</small></span>
+          <span class="kit-unit-was">em vez de <s>R$ 79,90</s> cada</span>
+        </div>
+        <span class="kit-price-line">De <s>R$ 199,90</s> por <strong>R$ 129,90</strong> no kit</span>
         <button class="cta-primary kit-cta" onclick="comprarAgora('2-unidades')">Comprar 2 unidades</button>
         <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
       </div>
@@ -1433,12 +1465,15 @@
       <!-- 3 unidades (destaque) -->
       <div class="kit-card featured" role="listitem">
         <span class="kit-banner">Melhor custo-benefício</span>
-        <div class="kit-media"><img src="./assets/images/kit-3un.jpg" alt="Base Stick FPS 50 — kit com 3 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
+        <span class="kit-off">-40%</span>
+        <div class="kit-media"><img src="./assets/images/kit-3un.webp" alt="Base Stick FPS 50 — kit com 3 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
         <p class="kit-name">3 unidades</p>
         <p class="kit-sub">3 Base Sticks + Lip Tint de brinde</p>
-        <span class="kit-price-old">De R$ XX,XX</span>
-        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
-        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <div class="kit-unit">
+          <span class="kit-unit-val">R$ 59,90<small>/un</small></span>
+          <span class="kit-unit-was">em vez de <s>R$ 79,90</s> cada</span>
+        </div>
+        <span class="kit-price-line">De <s>R$ 299,90</s> por <strong>R$ 179,90</strong> no kit</span>
         <button class="cta-primary kit-cta" onclick="comprarAgora('3-unidades')">Comprar 3 unidades</button>
         <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
       </div>
@@ -1446,10 +1481,10 @@
 
     <!-- Selos da marca -->
     <div class="seals-strip" role="list" aria-label="Certificações da marca">
-      <img src="./assets/brand/selo-cruelty-free-vegan.png" alt="Cruelty free e vegano" loading="lazy" />
-      <img src="./assets/brand/selo-derm-testado.png" alt="Dermatologicamente testado" loading="lazy" />
-      <img src="./assets/brand/selo-im-green.png" alt="I'm green — plástico de origem vegetal" loading="lazy" />
-      <img src="./assets/brand/selo-industria-brasileira.png" alt="Indústria brasileira" loading="lazy" />
+      <img src="./assets/brand/selo-cruelty-free-vegan.webp" alt="Cruelty free e vegano" loading="lazy" />
+      <img src="./assets/brand/selo-derm-testado.webp" alt="Dermatologicamente testado" loading="lazy" />
+      <img src="./assets/brand/selo-im-green.webp" alt="I'm green — plástico de origem vegetal" loading="lazy" />
+      <img src="./assets/brand/selo-industria-brasileira.webp" alt="Indústria brasileira" loading="lazy" />
     </div>
   </section>
 
@@ -1542,7 +1577,7 @@
   <!-- ░░ FOOTER ░░ -->
   <footer class="footer" aria-label="Rodapé">
     <div class="footer-logo" aria-label="Hidrabene Derma">
-      <img src="./assets/brand/logo-hidrabene-derma.png" alt="Hidrabene Derma" />
+      <img src="./assets/brand/logo-hidrabene-derma.webp" alt="Hidrabene Derma" />
     </div>
 
     <div class="footer-social" aria-label="Redes sociais">
@@ -1595,16 +1630,26 @@
       });
     });
 
-    // Autoplay de vídeos (UGC + antes/depois) só quando visíveis na tela
+    // Autoplay de vídeos (hero + UGC + antes/depois) só quando visíveis na tela.
+    // iOS/Safari só faz autoplay inline com o vídeo muted de fato — por isso forçamos
+    // a propriedade muted antes de cada play() (não basta o atributo no HTML).
     (function () {
-      const vids = document.querySelectorAll('.ugc-video, .vid-inview');
-      if (!('IntersectionObserver' in window) || !vids.length) return;
+      const vids = document.querySelectorAll('.hero-launch-video, .ugc-video, .vid-inview');
+      if (!vids.length) return;
+
+      function tryPlay(v) {
+        if (!v.dataset.userSound) { v.muted = true; v.defaultMuted = true; }
+        const p = v.play();
+        if (p && p.catch) p.catch(() => { try { v.load(); v.play().catch(() => {}); } catch (e) {} });
+      }
+
+      if (!('IntersectionObserver' in window)) { vids.forEach(tryPlay); return; }
       const io = new IntersectionObserver(entries => {
         entries.forEach(e => {
-          if (e.isIntersecting) { e.target.play().catch(() => {}); }
-          else { e.target.pause(); }
+          if (e.isIntersecting) tryPlay(e.target);
+          else e.target.pause();
         });
-      }, { threshold: 0.5 });
+      }, { threshold: 0.25 });
       vids.forEach(v => io.observe(v));
     })();
 
@@ -1614,6 +1659,7 @@
       if (!v) return;
       v.muted = !v.muted;
       const on = !v.muted;
+      if (on) { v.dataset.userSound = '1'; } else { delete v.dataset.userSound; }
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-pressed', String(on));
       btn.setAttribute('aria-label', on ? 'Desativar som' : 'Ativar som');

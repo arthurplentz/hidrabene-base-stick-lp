@@ -20,6 +20,7 @@
       --pink-main:    #F8D7DE;
       --pink-mid:     #E191A0;
       --pink-accent:  #E56C91;
+      --pink-fluor:   #F50A78;
       --dark:         #1D1D1B;
       --gray:         #A69DA2;
       --gray-light:   #F0EDED;
@@ -101,7 +102,7 @@
     .nav-logo span { font-size: 10px; display: block; letter-spacing: 0.3em; font-weight: 400; margin-top: 2px; }
     .nav-icon { width: 24px; height: 24px; opacity: 0.85; }
     .nav-cta {
-      background: var(--dark);
+      background: var(--pink-fluor);
       color: var(--white);
       font-family: var(--font-title);
       font-size: 12px;
@@ -157,7 +158,22 @@
       background: var(--dark);
       aspect-ratio: 9 / 16;
     }
-    .antes-depois-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .antes-depois-video { position: relative; }
+    .antes-depois-video video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .sound-toggle {
+      position: absolute; right: 10px; bottom: 10px; z-index: 2;
+      width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(29, 29, 27, 0.55); color: #fff;
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      display: grid; place-items: center;
+      transition: background .2s ease, transform .1s ease;
+    }
+    .sound-toggle:hover { background: rgba(29, 29, 27, 0.82); }
+    .sound-toggle:active { transform: scale(0.92); }
+    .sound-toggle svg { width: 20px; height: 20px; }
+    .sound-toggle .ic-on { display: none; }
+    .sound-toggle.is-on .ic-off { display: none; }
+    .sound-toggle.is-on .ic-on { display: block; }
     .ad-attrs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 22px auto 0; max-width: 360px; }
     .ad-cta { max-width: 340px; margin: 18px auto 4px; }
 
@@ -320,7 +336,7 @@
       justify-content: center;
       width: 100%;
       padding: 17px 24px;
-      background: var(--dark);
+      background: var(--pink-fluor);
       color: var(--white);
       font-family: var(--font-title);
       font-size: 14px;
@@ -333,7 +349,7 @@
     }
     .cta-primary:hover { opacity: 0.88; }
     .cta-pink {
-      background: var(--pink-accent);
+      background: var(--pink-fluor);
       color: var(--white);
     }
     .shipping-note {
@@ -906,6 +922,35 @@
     .seals-strip { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 18px 24px; padding: 26px 20px 24px; border-top: 1px solid var(--pink-main); margin: 28px -20px 0; }
     .seals-strip img { height: 48px; width: auto; }
 
+    /* ─── SELETOR DE TOM (oferta) ────────────────────── */
+    .shade-picker { max-width: 470px; margin: 4px auto 0; padding: 0 20px; text-align: center; }
+    .shade-picker .product-rating { justify-content: center; }
+    .shade-picker .variant-head { justify-content: center; margin-bottom: 10px; }
+    .shade-picker .variants-grid { justify-content: center; margin-bottom: 12px; }
+    .shade-picker .shade-helper { margin: 0 0 2px; }
+
+    /* ─── CARDS DE KIT (oferta) ──────────────────────── */
+    .kit-grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding: 0 16px; margin-top: 22px; }
+    .kit-grid > :nth-child(1) { order: 3; }
+    .kit-grid > :nth-child(2) { order: 2; }
+    .kit-grid > :nth-child(3) { order: 1; }
+    .kit-card { position: relative; display: flex; flex-direction: column; background: var(--white); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px 16px 14px; text-align: center; }
+    .kit-card.featured { border: 2px solid var(--pink-fluor); box-shadow: 0 12px 34px rgba(245,10,120,0.16); }
+    .kit-banner { align-self: center; background: var(--pink-fluor); color: var(--white); font-family: var(--font-title); font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: var(--radius-lg); margin-bottom: 12px; }
+    .kit-banner.alt { background: var(--dark); }
+    .kit-media { width: 100%; max-width: 240px; aspect-ratio: 4 / 5; margin: 0 auto 12px; border-radius: var(--radius-sm); overflow: hidden; }
+    .kit-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .kit-name { font-family: var(--font-title); font-size: 20px; font-weight: 800; color: var(--dark); letter-spacing: -0.01em; }
+    .kit-sub { font-family: var(--font-title); font-size: 13px; color: var(--gray); margin-bottom: 12px; }
+    .kit-price-old { display: block; font-family: var(--font-title); font-size: 13px; color: var(--gray); text-decoration: line-through; }
+    .kit-price-new { display: block; font-family: var(--font-title); font-size: 26px; font-weight: 800; color: var(--dark); margin: 1px 0; }
+    .kit-price-new em { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--pink-fluor); }
+    .kit-price-parc { display: block; font-family: var(--font-title); font-size: 12px; color: var(--gray); margin-bottom: 14px; }
+    .kit-cta { width: 100%; margin-top: auto; }
+    .kit-guarantee { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-title); font-size: 11.5px; color: var(--gray); margin-top: 6px; }
+    .kit-guarantee svg { width: 13px; height: 13px; flex-shrink: 0; stroke: var(--pink-fluor); }
+    .offer-section .seals-strip { margin: 28px 16px 0; }
+
     /* ─── FOOTER SVG (social / segurança / frete) ─────── */
     .footer-social-icon svg { width: 18px; height: 18px; display: block; stroke: var(--dark); }
     .footer-secure svg, .footer-shipping svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; }
@@ -980,6 +1025,9 @@
       .offer-section .hero-pdp > section[aria-label="Fotos do produto"] { position: static; }
       .offer-section .product-info { padding: 0; }
       .offer-section .seals-strip { margin: 28px 0 0; padding-left: 0; padding-right: 0; }
+      .kit-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1000px; margin: 24px auto 0; align-items: stretch; }
+      .kit-grid > * { order: 0; } /* desktop volta a 1 -> 2 -> 3 */
+      .kit-card { padding: 22px 18px 18px; }
 
       /* seções de conteúdo: fundo full-bleed, conteúdo centralizado em 1160 */
       .benefits-section, .hooks-section, .ativos-section,
@@ -1137,6 +1185,10 @@
       <video class="vid-inview" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/images/poster-antes-depois.jpg">
         <source src="./assets/video/antes-depois.mp4" type="video/mp4" />
       </video>
+      <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Ativar som" onclick="toggleSound(this)">
+        <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>
+        <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      </button>
     </div>
     <div class="micro-benefits" role="list" style="margin-top: 24px;">
       <div class="micro-benefit" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><span class="micro-benefit-label">FPS 50<br>UVA + UVB</span></div>
@@ -1312,96 +1364,93 @@
   <section class="offer-section" id="oferta" aria-label="Oferta — comprar Base Stick">
     <div class="offer-head">
       <p class="offer-eyebrow">Oferta de lançamento</p>
-      <h2 class="offer-title">Escolha seu tom e <em>garanta o seu</em></h2>
+      <h2 class="offer-title">Escolha seu tom e <em>seu kit</em></h2>
     </div>
-    <div class="hero-pdp">
-
-      <!-- ░░ PRODUCT CAROUSEL ░░ -->
-      <section aria-label="Fotos do produto">
-        <div class="carousel-wrap">
-          <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-slide">
-              <img src="./assets/images/modelo-base-stick.jpg" alt="Modelo segurando a Base Stick FPS 50 Hidrabene" loading="lazy" />
-            </div>
-            <div class="carousel-slide">
-              <img src="./assets/images/produto-5-tons.jpg" alt="Base Stick FPS 50 nos 5 tons disponíveis" loading="lazy" />
-            </div>
-            <div class="carousel-slide">
-              <img src="./assets/images/stick-ceu.jpg" alt="Detalhe do bastão Base Stick FPS 50 com proteção solar" loading="lazy" />
-            </div>
-          </div>
-          <div class="carousel-dots" id="carouselDots" aria-hidden="true">
-            <div class="carousel-dot active"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ░░ PRODUCT INFO ░░ -->
-      <section class="product-info" aria-label="Informações do produto">
-        <div class="product-rating">
-          <span class="stars" aria-label="4.5 estrelas">★★★★★</span>
-          <span class="rating-count">4.8 (127 avaliações)</span>
-        </div>
-        <h2 class="product-name">Nova Base Stick FPS 50</h2>
-        <p class="product-tagline">Fórmula nova, ainda mais sequinha</p>
-        <p class="product-desc">
-          Protetor solar e base no mesmo stick. FPS 50 contra UVA, UVB e luz visível, com cobertura alta que segura o dia inteiro. Um produto no lugar de vários.
-        </p>
-        <div class="price-block">
-          <span class="price-old">De R$ 96,46</span>
-          <div class="price-main">3x de R$ 24,97</div>
-          <div class="price-installment">ou R$ 74,90 à vista · sem juros</div>
-        </div>
-
-        <div class="variant-head">
-          <p class="variant-label">Cor: <span class="variant-selected-name" id="shadeName">Selecione seu tom</span></p>
-        </div>
-        <div class="variants-grid" role="group" aria-label="Escolha a cor">
-          <button class="variant-option" aria-pressed="false" data-shade="Clara 1.0">
-            <span class="variant-swatch" style="background:#E8C9A8;" aria-hidden="true"></span>
-            Clara 1.0
-          </button>
-          <button class="variant-option" aria-pressed="false" data-shade="Clara 2.0">
-            <span class="variant-swatch" style="background:#D4A87A;" aria-hidden="true"></span>
-            Clara 2.0
-          </button>
-          <button class="variant-option" aria-pressed="false" data-shade="Média 3.0">
-            <span class="variant-swatch" style="background:#C48A5A;" aria-hidden="true"></span>
-            Média 3.0
-          </button>
-          <button class="variant-option" aria-pressed="false" data-shade="Média 4.0">
-            <span class="variant-swatch" style="background:#A86A40;" aria-hidden="true"></span>
-            Média 4.0
-          </button>
-          <button class="variant-option" aria-pressed="false" data-shade="Escura 5.0">
-            <span class="variant-swatch" style="background:#6B3A28;" aria-hidden="true"></span>
-            Escura 5.0
-          </button>
-        </div>
-
-        <button class="shade-helper" type="button" onclick="guiaDeTom()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          Como escolher meu tom?
+    <!-- ░░ SELETOR DE TOM ░░ -->
+    <div class="shade-picker">
+      <div class="product-rating">
+        <span class="stars" aria-label="4.8 estrelas">★★★★★</span>
+        <span class="rating-count">4.8 (127 avaliações)</span>
+      </div>
+      <div class="variant-head">
+        <p class="variant-label">Seu tom: <span class="variant-selected-name" id="shadeName">Selecione seu tom</span></p>
+      </div>
+      <div class="variants-grid" role="group" aria-label="Escolha a cor">
+        <button class="variant-option" aria-pressed="false" data-shade="Clara 1.0">
+          <span class="variant-swatch" style="background:#E8C9A8;" aria-hidden="true"></span>
+          Clara 1.0
         </button>
+        <button class="variant-option" aria-pressed="false" data-shade="Clara 2.0">
+          <span class="variant-swatch" style="background:#D4A87A;" aria-hidden="true"></span>
+          Clara 2.0
+        </button>
+        <button class="variant-option" aria-pressed="false" data-shade="Média 3.0">
+          <span class="variant-swatch" style="background:#C48A5A;" aria-hidden="true"></span>
+          Média 3.0
+        </button>
+        <button class="variant-option" aria-pressed="false" data-shade="Média 4.0">
+          <span class="variant-swatch" style="background:#A86A40;" aria-hidden="true"></span>
+          Média 4.0
+        </button>
+        <button class="variant-option" aria-pressed="false" data-shade="Escura 5.0">
+          <span class="variant-swatch" style="background:#6B3A28;" aria-hidden="true"></span>
+          Escura 5.0
+        </button>
+      </div>
+      <button class="shade-helper" type="button" onclick="guiaDeTom()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Como escolher meu tom?
+      </button>
+    </div>
 
-        <div class="buy-attrs" role="list">
-          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><span>Alta Cobertura</span></div>
-          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" stroke="none"/></svg></span><span>Acabamento Matte</span></div>
-          <div class="buy-attr" role="listitem"><span class="micro-benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span><span>Antiacne</span></div>
-        </div>
-        <button class="cta-primary" onclick="comprarAgora()">Comprar agora →</button>
+    <!-- ░░ KITS ░░ -->
+    <div class="kit-grid" role="list">
+      <!-- 1 unidade -->
+      <div class="kit-card" role="listitem">
+        <div class="kit-media"><img src="./assets/images/kit-1un.jpg" alt="Base Stick FPS 50 — 1 unidade" width="673" height="853" loading="lazy" /></div>
+        <p class="kit-name">1 unidade</p>
+        <p class="kit-sub">1 Base Stick FPS 50</p>
+        <span class="kit-price-old">De R$ XX,XX</span>
+        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
+        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <button class="cta-primary kit-cta" onclick="comprarAgora('1-unidade')">Comprar 1 unidade</button>
+        <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
+      </div>
 
-        <!-- Selos da marca -->
-        <div class="seals-strip" role="list" aria-label="Certificações da marca">
-          <img src="./assets/brand/selo-cruelty-free-vegan.png" alt="Cruelty free e vegano" loading="lazy" />
-          <img src="./assets/brand/selo-derm-testado.png" alt="Dermatologicamente testado" loading="lazy" />
-          <img src="./assets/brand/selo-im-green.png" alt="I'm green — plástico de origem vegetal" loading="lazy" />
-          <img src="./assets/brand/selo-industria-brasileira.png" alt="Indústria brasileira" loading="lazy" />
-        </div>
-      </section>
-    </div><!-- /hero-pdp -->
+      <!-- 2 unidades -->
+      <div class="kit-card" role="listitem">
+        <span class="kit-banner alt">Mais vendido</span>
+        <div class="kit-media"><img src="./assets/images/kit-2un.jpg" alt="Base Stick FPS 50 — kit com 2 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
+        <p class="kit-name">2 unidades</p>
+        <p class="kit-sub">2 Base Sticks + Lip Tint de brinde</p>
+        <span class="kit-price-old">De R$ XX,XX</span>
+        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
+        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <button class="cta-primary kit-cta" onclick="comprarAgora('2-unidades')">Comprar 2 unidades</button>
+        <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
+      </div>
+
+      <!-- 3 unidades (destaque) -->
+      <div class="kit-card featured" role="listitem">
+        <span class="kit-banner">Melhor custo-benefício</span>
+        <div class="kit-media"><img src="./assets/images/kit-3un.jpg" alt="Base Stick FPS 50 — kit com 3 unidades + Lip Tint de brinde" width="682" height="853" loading="lazy" /></div>
+        <p class="kit-name">3 unidades</p>
+        <p class="kit-sub">3 Base Sticks + Lip Tint de brinde</p>
+        <span class="kit-price-old">De R$ XX,XX</span>
+        <span class="kit-price-new">por <em>R$ XX,XX</em></span>
+        <span class="kit-price-parc">ou 12x de R$ XX,XX</span>
+        <button class="cta-primary kit-cta" onclick="comprarAgora('3-unidades')">Comprar 3 unidades</button>
+        <p class="kit-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg> Garantia incondicional de 7 dias</p>
+      </div>
+    </div>
+
+    <!-- Selos da marca -->
+    <div class="seals-strip" role="list" aria-label="Certificações da marca">
+      <img src="./assets/brand/selo-cruelty-free-vegan.png" alt="Cruelty free e vegano" loading="lazy" />
+      <img src="./assets/brand/selo-derm-testado.png" alt="Dermatologicamente testado" loading="lazy" />
+      <img src="./assets/brand/selo-im-green.png" alt="I'm green — plástico de origem vegetal" loading="lazy" />
+      <img src="./assets/brand/selo-industria-brasileira.png" alt="Indústria brasileira" loading="lazy" />
+    </div>
   </section>
 
   <!-- ░░ FAQ ░░ -->
@@ -1559,6 +1608,18 @@
       vids.forEach(v => io.observe(v));
     })();
 
+    // Único controle do vídeo antes/depois: liga/desliga o som (começa mudo)
+    function toggleSound(btn) {
+      const v = btn.closest('.antes-depois-video').querySelector('video');
+      if (!v) return;
+      v.muted = !v.muted;
+      const on = !v.muted;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Desativar som' : 'Ativar som');
+      if (on) v.play().catch(() => {});
+    }
+
     // FAQ accordion
     function toggleFaq(btn) {
       const item = btn.closest('.faq-item');
@@ -1580,20 +1641,22 @@
 
     // Checkout — colar o link do checkout em CHECKOUT_URL quando tiver
     const CHECKOUT_URL = ''; // ex: 'https://checkout.hidrabene.com.br/base-stick'
-    function comprarAgora() {
+    function comprarAgora(kit) {
       const selected = document.querySelector('.variant-option.selected');
       if (!selected) {
         alert('Escolha o seu tom antes de continuar.');
-        const grid = document.querySelector('.variants-grid');
-        if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const picker = document.querySelector('.shade-picker');
+        if (picker) picker.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
       const variant = selected.dataset.shade || selected.textContent.trim();
       if (CHECKOUT_URL) {
         const sep = CHECKOUT_URL.includes('?') ? '&' : '?';
-        window.location.href = CHECKOUT_URL + sep + 'tom=' + encodeURIComponent(variant);
+        let url = CHECKOUT_URL + sep + 'tom=' + encodeURIComponent(variant);
+        if (kit) url += '&kit=' + encodeURIComponent(kit);
+        window.location.href = url;
       } else {
-        alert(`Tom selecionado: ${variant}\n\nO link do checkout será configurado aqui (CHECKOUT_URL).`);
+        alert(`Tom: ${variant}${kit ? '\nKit: ' + kit : ''}\n\nO link do checkout será configurado aqui (CHECKOUT_URL).`);
       }
     }
   </script>

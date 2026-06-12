@@ -1686,8 +1686,24 @@
       alert('Guia de tons: a gente te ajuda a achar seu tom ideal.\n\n(Integrar quiz de shade-match na versão final)');
     }
 
-    // Checkout — colar o link do checkout em CHECKOUT_URL quando tiver
-    const CHECKOUT_URL = ''; // ex: 'https://checkout.hidrabene.com.br/base-stick'
+    // Checkout Yampi — um link por (kit × tom). 3 unidades: links pendentes.
+    const CHECKOUT = {
+      '1-unidade': {
+        'Clara 1.0':  'https://hidrabene.pay.yampi.com.br/r/PRZP32Z885',
+        'Clara 2.0':  'https://hidrabene.pay.yampi.com.br/r/JU8Q2ANCAR',
+        'Média 3.0':  'https://hidrabene.pay.yampi.com.br/r/EBVH1C2AW8',
+        'Média 4.0':  'https://hidrabene.pay.yampi.com.br/r/OB3WLBY47I',
+        'Escura 5.0': 'https://hidrabene.pay.yampi.com.br/r/FVPTQ5JQW2'
+      },
+      '2-unidades': {
+        'Clara 1.0':  'https://hidrabene.pay.yampi.com.br/r/5SEDOBKJH1',
+        'Clara 2.0':  'https://hidrabene.pay.yampi.com.br/r/JAZT1SP5IE',
+        'Média 3.0':  'https://hidrabene.pay.yampi.com.br/r/7S2TROUFMS',
+        'Média 4.0':  'https://hidrabene.pay.yampi.com.br/r/572JAGAO8L',
+        'Escura 5.0': 'https://hidrabene.pay.yampi.com.br/r/G51LDKTB98'
+      },
+      '3-unidades': {} // TODO: aguardando os links do kit de 3 unidades
+    };
     function comprarAgora(kit) {
       const selected = document.querySelector('.variant-option.selected');
       if (!selected) {
@@ -1697,13 +1713,13 @@
         return;
       }
       const variant = selected.dataset.shade || selected.textContent.trim();
-      if (CHECKOUT_URL) {
-        const sep = CHECKOUT_URL.includes('?') ? '&' : '?';
-        let url = CHECKOUT_URL + sep + 'tom=' + encodeURIComponent(variant);
-        if (kit) url += '&kit=' + encodeURIComponent(kit);
+      const url = (CHECKOUT[kit] || {})[variant];
+      if (url) {
         window.location.href = url;
+      } else if (kit === '3-unidades') {
+        alert('O kit de 3 unidades chega em breve. Por enquanto, garanta o seu com 1 ou 2 unidades.');
       } else {
-        alert(`Tom: ${variant}${kit ? '\nKit: ' + kit : ''}\n\nO link do checkout será configurado aqui (CHECKOUT_URL).`);
+        alert(`Tom: ${variant}\nKit: ${kit}\n\nLink de checkout não configurado para esta combinação.`);
       }
     }
   </script>
